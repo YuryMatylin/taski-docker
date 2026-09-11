@@ -199,9 +199,8 @@ jobs:
     steps:
     - name: Send VK message
       run: |
-        curl -X POST "https://api.vk.com/method/messages.send" \
-          -d "v=5.131" \
-          -d "random_id=0" \
-          -d "peer_id=${{ secrets.VK_USER_ID }}" \
-          -d "message=Деплой успешно выполнен! ✅" \
-          -H "Authorization: Bearer ${{ secrets.VK_TOKEN }}"
+        message="Деплой+успешно+выполнен!"
+        params="access_token=${{ secrets.VK_TOKEN }}&v=5.131&random_id=0&user_id=${{ secrets.VK_USER_ID }}&message=$message"
+        
+        curl -d "$params" "https://api.vk.com/method/messages.send"
+
