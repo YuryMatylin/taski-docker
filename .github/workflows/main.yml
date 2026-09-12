@@ -199,7 +199,11 @@ jobs:
     steps:
     - name: Send VK message
       run: |
-        message="Деплой+успешно+выполнен!"
+        commit_text="${{ github.event.head_commit.message }}"
+        
+        raw_message="Деплой проекта taski успешно выполнен! Коммит: $commit_text"
+        message=$(echo "$raw_message" | tr ' ' '+')
+        
         params="access_token=${{ secrets.VK_TOKEN }}&v=5.199&random_id=0&user_id=${{ secrets.VK_USER_ID }}&message=$message"
         
         curl -d "$params" "https://api.vk.com/method/messages.send"
